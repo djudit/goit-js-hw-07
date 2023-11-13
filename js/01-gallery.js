@@ -5,10 +5,12 @@ console.log(galleryItems);
 
 const gallery = document.querySelector(".gallery");
 
+gallery.addEventListener("click", handlerClick);
+
 function createGallery(pictures) {
   return pictures
-    .map(
-      ({ original, preview, description }) => `
+    .map(({ original, preview, description }) => {
+      return `
       <li class="gallery__item">
       <a class="gallery__link" href="${original}">
         <img
@@ -19,18 +21,30 @@ function createGallery(pictures) {
         />
       </a>
     </li>
-    `
-    )
+    `;
+    })
     .join("");
 }
 
 const itemPicture = createGallery(galleryItems);
 gallery.insertAdjacentHTML("beforeend", itemPicture);
 
-//   Copied from basicLightbox
+function handlerClick(event) {
+  event.preventDefault();
+  if (event.target.nodeName !== "IMG") {
+    return;
+  }
 
-const instance = basicLightbox.create(`
-    <img src="assets/images/image.png" width="800" height="600">
+  //   Copied from basicLightbox
+  const instance = basicLightbox.create(`
+<img src="${event.target.dataset.source}" width="800" height="600">
 `);
+  instance.show();
 
-instance.show();
+  document.addEventListener("keyup", handlerClose);
+  function handlerClose(evt) {
+    if (evt.key === "Escape") {
+      instance.close();
+    }
+  }
+}
