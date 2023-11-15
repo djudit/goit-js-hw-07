@@ -35,13 +35,21 @@ function handlerClick(event) {
     return;
   }
 
-  //   Copied from basicLightbox
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
 <img src="${event.target.dataset.source}" width="800" height="600">
-`);
+`,
+    {
+      onShow: (instance) => {
+        document.addEventListener("keydown", handlerClose);
+      },
+      onClose: (instance) => {
+        document.removeEventListener("keydown", handlerClose);
+      },
+    }
+  );
   instance.show();
 
-  document.addEventListener("keyup", handlerClose);
   function handlerClose(evt) {
     if (evt.key === "Escape") {
       instance.close();
