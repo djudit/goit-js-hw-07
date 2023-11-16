@@ -3,8 +3,6 @@ import { galleryItems } from "./gallery-items.js";
 
 const gallery = document.querySelector(".gallery");
 
-// gallery.addEventListener("click", handlerClick);
-
 function createGallery(pictures) {
   return pictures
     .map(({ preview, original, description }) => {
@@ -22,25 +20,7 @@ function createGallery(pictures) {
 const itemPicture = createGallery(galleryItems);
 gallery.insertAdjacentHTML("beforeend", itemPicture);
 
-// function handlerClick(event) {
-//   event.preventDefault();
-//   if (event.target.nodeName !== "IMG") {
-//     return;
-//   }
-
 let gallerySimple = new SimpleLightbox(".gallery a", {
   captionsData: "alt",
   captionDelay: 250,
 });
-gallerySimple.on("show.simplelightbox");
-// }
-
-// import * as basicLightbox from "basiclightbox";
-
-// const instance = basicLightbox.create(`
-//     <img src="assets/images/image.png" width="800" height="600">
-// `);
-
-// instance.show();
-
-// console.log(galleryItems);
